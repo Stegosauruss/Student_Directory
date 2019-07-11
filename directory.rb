@@ -20,9 +20,11 @@ def print_header
 end
 
 # Method to print student list
-def print(names)
+def print_list(names, letter)
   names.each_with_index do |(name, cohort), index|
-    puts "#{index}. #{name} is in the #{cohort} cohort."
+    if name[0] == letter && name.length < 12
+      puts "#{index}. #{name} is in the #{cohort} cohort."
+    end
   end
 end
 
@@ -31,8 +33,15 @@ def print_footer(names)
   puts "Overall we have #{names.count} great students"
 end
 
+# Method to print full list
+def print(names)
+  puts "Which letter would you like to print?"
+  current_letter = gets.chomp
+  print_header
+  print_list(names, current_letter)
+  print_footer(names)
+end
+
 # Calling methods in order
 students = input_students
-print_header
 print(students)
-print_footer(students)
