@@ -21,10 +21,12 @@ end
 
 # Method to print student list
 def print_list(names, letter)
-  names.each_with_index do |(name, cohort), index|
-    if name[0] == letter && name.length < 12
-      puts "#{index}. #{name} is in the #{cohort} cohort."
+  count = 0
+  while count < names.length do
+    if names.keys[count][0] == letter && names.keys[count].length < 12
+      puts "#{count + 1}. #{names.keys[count]} is in the #{names.values[count]} cohort."
     end
+    count += 1
   end
 end
 
