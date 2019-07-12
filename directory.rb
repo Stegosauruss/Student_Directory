@@ -5,7 +5,11 @@ def input_students
   students = []
   name = gets.chomp
   while !name.empty? do
-    students << {name: name, cohort: :november}
+    puts "and their hobbies?"
+    hobby = gets.chomp
+    puts "and their country of birth?"
+    country = gets.chomp
+    students << {name: name, cohort: :november, hobbies: hobby, birth_country: country}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -23,8 +27,11 @@ end
 def print_list(names, letter)
   count = 0
   while count < names.length  do
-    if names[count][:name][0] == letter
-      puts "#{count}. #{names[count][:name]} (#{names[count][:cohort]} cohort)"
+    if names[count][:name][0] == letter && names[count][:name].length < 12
+      puts "#{count}. #{names[count][:name]}
+      cohort: #{names[count][:cohort]}
+      country of birth: #{names[count][:birth_country]}   
+      hobbies: #{names[count][:hobbies]}"
     end
     count += 1
   end
