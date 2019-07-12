@@ -19,8 +19,8 @@ end
 
 # Method to print header
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(30, "-")
+  puts "-".center(30, "-")
 end
 
 # Method to print student list
@@ -28,10 +28,11 @@ def print_list(names, letter)
   count = 0
   while count < names.length  do
     if names[count][:name][0] == letter && names[count][:name].length < 12
-      puts "#{count}. #{names[count][:name]}
-      cohort: #{names[count][:cohort]}
-      country of birth: #{names[count][:birth_country]}   
-      hobbies: #{names[count][:hobbies]}"
+      puts "#{count}. #{names[count][:name]}".center(30, "-")
+      puts "cohort: #{names[count][:cohort]}".center(30, "-")
+      puts "country of birth: #{names[count][:birth_country]}".center(30, "-")   
+      puts "hobbies: #{names[count][:hobbies]}".center(30, "-")
+      puts "-".center(30, "-")
     end
     count += 1
   end
