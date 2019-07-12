@@ -23,7 +23,9 @@ end
 def print_list(names, letter)
   count = 0
   names.each_with_index do |student, index|
-    puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name][0] == letter
+      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
