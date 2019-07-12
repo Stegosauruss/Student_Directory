@@ -22,10 +22,11 @@ end
 # Method to print student list
 def print_list(names, letter)
   count = 0
-  names.each_with_index do |student, index|
-    if student[:name][0] == letter
-      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+  while count < names.length  do
+    if names[count][:name][0] == letter
+      puts "#{count}. #{names[count][:name]} (#{names[count][:cohort]} cohort)"
     end
+    count += 1
   end
 end
 
