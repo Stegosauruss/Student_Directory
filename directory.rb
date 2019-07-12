@@ -2,10 +2,10 @@
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  students = {}
+  students = []
   name = gets.chomp
   while !name.empty? do
-    students.store(name, "November")
+    students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -22,11 +22,8 @@ end
 # Method to print student list
 def print_list(names, letter)
   count = 0
-  while count < names.length do
-    if names.keys[count][0] == letter && names.keys[count].length < 12
-      puts "#{count + 1}. #{names.keys[count]} is in the #{names.values[count]} cohort."
-    end
-    count += 1
+  names.each_with_index do |student, index|
+    puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
