@@ -53,20 +53,17 @@ def print_list(students, letter)
   # Organise array by cohort and select only preferred letter 
   months = {:january => 1, :february => 2, :march => 3, :april => 4, :may => 5, :june => 6, :july => 7, :august => 8, :september => 9, :october => 10, :november => 11, :december => 12}
   students = students.sort_by {|student| months[student[:cohort]]}
-  students_alpha = []
-  students.each do |student|
-    if student[:name][0] == letter && student[:name].length < 12
-      students_alpha << student
-    end
+  students = students.select do |student|
+    student[:name][0] == letter && student[:name].length < 12
   end
 
   # print list
   count = 0
-  while count < students_alpha.length  do
-    puts "#{count+1}. #{students_alpha[count][:name]}".center(30, "-")
-    puts "cohort: #{students_alpha[count][:cohort]}".center(30, "-")
-    puts "country of birth: #{students_alpha[count][:birth_country]}".center(30, "-")   
-    puts "hobbies: #{students_alpha[count][:hobbies]}".center(30, "-")
+  while count < students.length  do
+    puts "#{count+1}. #{students[count][:name]}".center(30, "-")
+    puts "cohort: #{students[count][:cohort]}".center(30, "-")
+    puts "country of birth: #{students[count][:birth_country]}".center(30, "-")   
+    puts "hobbies: #{students[count][:hobbies]}".center(30, "-")
     puts "-".center(30, "-")
     count += 1
   end
