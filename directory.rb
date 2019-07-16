@@ -53,15 +53,18 @@ def print_list(names, letter)
   count = 0
   months = {:january => 1, :february => 2, :march => 3, :april => 4, :may => 5, :june => 6, :july => 7, :august => 8, :september => 9, :october => 10, :november => 11, :december => 12}
   names = names.sort_by {|student| months[student[:cohort]]}
-  puts names
-  while count < names.length  do
-    if names[count][:name][0] == letter && names[count][:name].length < 12
-      puts "#{count+1}. #{names[count][:name]}".center(30, "-")
-      puts "cohort: #{names[count][:cohort]}".center(30, "-")
-      puts "country of birth: #{names[count][:birth_country]}".center(30, "-")   
-      puts "hobbies: #{names[count][:hobbies]}".center(30, "-")
-      puts "-".center(30, "-")
+  names_alpha = []
+  names.each do |student|
+    if student[:name][0] == letter && student[:name].length < 12
+      names_alpha << student
     end
+  end
+  while count < names_alpha.length  do
+    puts "#{count+1}. #{names_alpha[count][:name]}".center(30, "-")
+    puts "cohort: #{names_alpha[count][:cohort]}".center(30, "-")
+    puts "country of birth: #{names_alpha[count][:birth_country]}".center(30, "-")   
+    puts "hobbies: #{names_alpha[count][:hobbies]}".center(30, "-")
+    puts "-".center(30, "-")
     count += 1
   end
 end
