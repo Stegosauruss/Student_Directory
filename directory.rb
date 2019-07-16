@@ -31,7 +31,11 @@ def input_students
     puts "and their country of birth?"
     country = gets.chomp.to_sym
     students << {name: name, cohort: cohort, hobbies: hobby, birth_country: country}
-    puts "Now we have #{students.count} students"
+    if students.length == 1
+      puts "Now we have 1 student"
+    else
+      puts "Now we have #{students.count} students"
+    end
     name = gets.chomp
   end
   students
@@ -49,7 +53,7 @@ def print_list(names, letter)
   count = 0
   while count < names.length  do
     if names[count][:name][0] == letter && names[count][:name].length < 12
-      puts "#{count}. #{names[count][:name]}".center(30, "-")
+      puts "#{count+1}. #{names[count][:name]}".center(30, "-")
       puts "cohort: #{names[count][:cohort]}".center(30, "-")
       puts "country of birth: #{names[count][:birth_country]}".center(30, "-")   
       puts "hobbies: #{names[count][:hobbies]}".center(30, "-")
