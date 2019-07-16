@@ -51,6 +51,9 @@ end
 # Method to print student list
 def print_list(names, letter)
   count = 0
+  months = {:january => 1, :february => 2, :march => 3, :april => 4, :may => 5, :june => 6, :july => 7, :august => 8, :september => 9, :october => 10, :november => 11, :december => 12}
+  names = names.sort_by {|student| months[student[:cohort]]}
+  puts names
   while count < names.length  do
     if names[count][:name][0] == letter && names[count][:name].length < 12
       puts "#{count+1}. #{names[count][:name]}".center(30, "-")
