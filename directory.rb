@@ -23,20 +23,20 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   students = []
-  name = gets.chomp
+  name = gets.chop
   while !name.empty? do
     cohort = get_cohort
     puts "and their hobbies?"
-    hobby = gets.chomp.to_sym
+    hobby = gets.chop.to_sym
     puts "and their country of birth?"
-    country = gets.chomp.to_sym
+    country = gets.chop.to_sym
     students << {name: name, cohort: cohort, hobbies: hobby, birth_country: country}
     if students.length == 1
       puts "Now we have 1 student"
     else
       puts "Now we have #{students.count} students"
     end
-    name = gets.chomp
+    name = gets.chop
   end
   students
 end
@@ -50,7 +50,7 @@ end
 
 # Method to print student list
 def print_list(names, letter)
-  count = 0
+  # Organise array by cohort and select only preferred letter 
   months = {:january => 1, :february => 2, :march => 3, :april => 4, :may => 5, :june => 6, :july => 7, :august => 8, :september => 9, :october => 10, :november => 11, :december => 12}
   names = names.sort_by {|student| months[student[:cohort]]}
   names_alpha = []
@@ -59,6 +59,9 @@ def print_list(names, letter)
       names_alpha << student
     end
   end
+
+  # print list
+  count = 0
   while count < names_alpha.length  do
     puts "#{count+1}. #{names_alpha[count][:name]}".center(30, "-")
     puts "cohort: #{names_alpha[count][:cohort]}".center(30, "-")
@@ -77,7 +80,7 @@ end
 # Method to print full list
 def print(names)
   puts "Which letter would you like to print?"
-  current_letter = gets.chomp
+  current_letter = gets.chop
   print_header
   print_list(names, current_letter)
   print_footer(names)
