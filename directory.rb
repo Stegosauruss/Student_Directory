@@ -5,11 +5,17 @@ def input_students
   students = []
   name = gets.chomp
   while !name.empty? do
+    puts "What is their cohort?"
+    cohort = gets.chomp
+    if cohort == ""
+      cohort = :november
+    end
+    cohort= cohort.to_sym
     puts "and their hobbies?"
-    hobby = gets.chomp
+    hobby = gets.chomp.to_sym
     puts "and their country of birth?"
-    country = gets.chomp
-    students << {name: name, cohort: :november, hobbies: hobby, birth_country: country}
+    country = gets.chomp.to_sym
+    students << {name: name, cohort: cohort, hobbies: hobby, birth_country: country}
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
