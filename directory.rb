@@ -88,4 +88,6 @@ end
 
 # Calling methods in order
 students = input_students
-print(students)
+if students.length != 0
+  print(students)
+end
