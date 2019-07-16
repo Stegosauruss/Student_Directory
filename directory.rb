@@ -1,3 +1,23 @@
+#Method to get cohort
+def get_cohort
+  cohorts = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+  while true
+    puts "What is their cohort?"
+    cohort = gets.chomp
+    if cohort == ""
+      cohort = :november
+      break
+    elsif cohorts.include?(cohort)
+      cohort = cohort.to_sym
+      break
+    else
+      puts "Please try that again"
+    end
+  end
+  cohort
+end
+
+
 # Method to add students to list
 def input_students
   puts "Please enter the names of the students"
@@ -5,12 +25,7 @@ def input_students
   students = []
   name = gets.chomp
   while !name.empty? do
-    puts "What is their cohort?"
-    cohort = gets.chomp
-    if cohort == ""
-      cohort = :november
-    end
-    cohort= cohort.to_sym
+    cohort = get_cohort
     puts "and their hobbies?"
     hobby = gets.chomp.to_sym
     puts "and their country of birth?"
