@@ -1,13 +1,13 @@
 #Method to get cohort
 def get_cohort
-  cohorts = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
+  months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
   while true
     puts "What is their cohort?"
     cohort = gets.chomp
     if cohort == ""
       cohort = :november
       break
-    elsif cohorts.include?(cohort)
+    elsif months.include?(cohort)
       cohort = cohort.to_sym
       break
     else
@@ -49,41 +49,41 @@ def print_header
 end
 
 # Method to print student list
-def print_list(names, letter)
+def print_list(students, letter)
   # Organise array by cohort and select only preferred letter 
   months = {:january => 1, :february => 2, :march => 3, :april => 4, :may => 5, :june => 6, :july => 7, :august => 8, :september => 9, :october => 10, :november => 11, :december => 12}
-  names = names.sort_by {|student| months[student[:cohort]]}
-  names_alpha = []
-  names.each do |student|
+  students = students.sort_by {|student| months[student[:cohort]]}
+  students_alpha = []
+  students.each do |student|
     if student[:name][0] == letter && student[:name].length < 12
-      names_alpha << student
+      students_alpha << student
     end
   end
 
   # print list
   count = 0
-  while count < names_alpha.length  do
-    puts "#{count+1}. #{names_alpha[count][:name]}".center(30, "-")
-    puts "cohort: #{names_alpha[count][:cohort]}".center(30, "-")
-    puts "country of birth: #{names_alpha[count][:birth_country]}".center(30, "-")   
-    puts "hobbies: #{names_alpha[count][:hobbies]}".center(30, "-")
+  while count < students_alpha.length  do
+    puts "#{count+1}. #{students_alpha[count][:name]}".center(30, "-")
+    puts "cohort: #{students_alpha[count][:cohort]}".center(30, "-")
+    puts "country of birth: #{students_alpha[count][:birth_country]}".center(30, "-")   
+    puts "hobbies: #{students_alpha[count][:hobbies]}".center(30, "-")
     puts "-".center(30, "-")
     count += 1
   end
 end
 
 # Method to print the number of students
-def print_footer(names)
-  puts "Overall we have #{names.count} great students"
+def print_footer(students)
+  puts "Overall we have #{students.count} great students"
 end
 
 # Method to print full list
-def print(names)
+def print(students)
   puts "Which letter would you like to print?"
   current_letter = gets.chop
   print_header
-  print_list(names, current_letter)
-  print_footer(names)
+  print_list(students, current_letter)
+  print_footer(students)
 end
 
 # Calling methods in order
