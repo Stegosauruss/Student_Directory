@@ -1,4 +1,11 @@
-#Method to get cohort
+@students = [] # an empty array accessible to all methods
+@letter = "a"
+@students_select = []
+
+
+# Methods for collecting student information
+
+# Method to get cohort
 def get_cohort
   months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
   while true
@@ -17,12 +24,10 @@ def get_cohort
   cohort
 end
 
-
 # Method to add students to list
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  students = []
   name = gets.chop
   while !name.empty? do
     cohort = get_cohort
@@ -30,17 +35,18 @@ def input_students
     hobby = gets.chop.to_sym
     puts "and their country of birth?"
     country = gets.chop.to_sym
-    students << {name: name, cohort: cohort, hobbies: hobby, birth_country: country}
-    if students.length == 1
+    @students << {name: name, cohort: cohort, hobbies: hobby, birth_country: country}
+    if @students.length == 1
       puts "Now we have 1 student"
     else
-      puts "Now we have #{students.count} students"
+      puts "Now we have #{@students.count} students"
     end
     name = gets.chop
   end
-  students
 end
 
+
+# Methods to print the list
 
 # Method to print header
 def print_header
@@ -48,63 +54,73 @@ def print_header
   puts "-".center(30, "-")
 end
 
-# Method to print student list
-def print_list(students, letter)
-  # Organise array by cohort and select only preferred letter 
+# method to select students based on letter
+def select_students
   months = {:january => 1, :february => 2, :march => 3, :april => 4, :may => 5, :june => 6, :july => 7, :august => 8, :september => 9, :october => 10, :november => 11, :december => 12}
-  students = students.sort_by {|student| months[student[:cohort]]}
-  students = students.select do |student|
-    student[:name][0] == letter && student[:name].length < 12
+  @students_select = @students.select do |student|
+    student[:name][0] == @letter && student[:name].length < 12
   end
+  @students_select = @students_select.sort_by {|student| months[student[:cohort]]}
+end
 
-  # print list
+# Method to print student list
+def print_list
   count = 0
-  while count < students.length  do
-    puts "#{count+1}. #{students[count][:name]}".center(30, "-")
-    puts "cohort: #{students[count][:cohort]}".center(30, "-")
-    puts "country of birth: #{students[count][:birth_country]}".center(30, "-")   
-    puts "hobbies: #{students[count][:hobbies]}".center(30, "-")
+  while count < @students_select.length  do
+    puts "#{count+1}. #{@students_select[count][:name]}".center(30, "-")
+    puts "cohort: #{@students_select[count][:cohort]}".center(30, "-")
+    puts "country of birth: #{@students_select[count][:birth_country]}".center(30, "-")   
+    puts "hobbies: #{@students_select[count][:hobbies]}".center(30, "-")
     puts "-".center(30, "-")
     count += 1
   end
 end
 
 # Method to print the number of students
-def print_footer(students)
-  puts "Overall we have #{students.count} great students"
+def print_footer
+  puts "Overall we have #{@students.count} great students"
 end
 
-# Method to print full list
-def print(students)
+# Combined methods for full print
+def show_students
   puts "Which letter would you like to print?"
-  current_letter = gets.chop
-  print_header
-  print_list(students, current_letter)
-  print_footer(students)
+  @letter = gets.chop
+  select_students
+  if @students_select != 0
+    print_header
+    print_list
+    print_footer
+  else
+    puts "There are 0 students beginning with that letter"
+  end
 end
 
 
+# Methods for menu options
+
+# Print menu options for user
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+# user input loop for menu options
 def interactive_menu
-  students = []
+  @students = []
   loop do
     # 1. Print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
+    print_menu
     # 2. read the input and save it to a variable
     selection = gets.chomp
     # 3. do what the user has asked
     case selection
     when "1"
       # input the students
-      students = input_students
+      input_students
     when "2"
       # show the students
-      if students.length != 0
-        print(students)
-      else
-        puts "The student list is empty"
-      end
+      show_students
     when "9"
       exit # this will cause the program to terminate
     else
@@ -113,4 +129,6 @@ def interactive_menu
   end
 end
 
+
+# Calling interactive menu
 interactive_menu
