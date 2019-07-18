@@ -95,19 +95,28 @@ def show_students
   end
 end
 
-# Methods for saving students to file
+# Methods for saving and loading from students.csv
 
 # Method to save students to file
 def save_students
   file = File.open("students.csv","w")
   @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:birth_country], student[:hobbies]]
+    student_data = [student[:name], student[:cohort], student[:hobbies], student[:birth_country],]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
 end
 
+# Method to load students from file
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+    name, cohort, birth_country, hobbies = line.chomp.split(",")
+    @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies.to_sym, birth_country: birth_country.to_sym}
+  end
+  file.close
+end
 
 # Methods for menu options
 
@@ -116,6 +125,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
   puts "9. Exit"
 end
 
@@ -129,6 +139,8 @@ def process(selection)
       show_students
     when "3"
       save_students
+    when "4"
+      load_students
     when "9"
       exit # this will cause the program to terminate
     else
