@@ -64,7 +64,7 @@ def select_students
 end
 
 # Method to print student list
-def print_list
+def print_students_list
   count = 0
   while count < @students_select.length  do
     puts "#{count+1}. #{@students_select[count][:name]}".center(30, "-")
@@ -88,11 +88,24 @@ def show_students
   select_students
   if @students_select.length != 0
     print_header
-    print_list
+    print_students_list
     print_footer
   else
     puts "There are 0 students beginning with that letter"
   end
+end
+
+# Methods for saving students to file
+
+# Method to save students to file
+def save_students
+  file = File.open("students.csv","w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort], student[:birth_country], student[:hobbies]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
 end
 
 
@@ -102,6 +115,7 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
   puts "9. Exit"
 end
 
@@ -113,6 +127,8 @@ def process(selection)
     when "2"
       # show the students
       show_students
+    when "3"
+      save_students
     when "9"
       exit # this will cause the program to terminate
     else
