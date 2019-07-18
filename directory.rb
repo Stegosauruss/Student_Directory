@@ -106,6 +106,7 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "information saved to student.csv"
   file.close
 end
 
@@ -116,6 +117,7 @@ def load_students(filename = "students.csv")
     name, cohort, hobbies, birth_country = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies.to_sym, birth_country: birth_country.to_sym}
   end
+  puts "Information loaded from #{filename}"
   file.close
 end
 
