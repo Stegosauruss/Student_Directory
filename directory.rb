@@ -54,7 +54,7 @@ def print_header
   puts "-".center(30, "-")
 end
 
-# method to select students based on letter
+# method to select students based on letter and cut out names which are too long
 def select_students
   months = {:january => 1, :february => 2, :march => 3, :april => 4, :may => 5, :june => 6, :july => 7, :august => 8, :september => 9, :october => 10, :november => 11, :december => 12}
   @students_select = @students.select do |student|
@@ -86,7 +86,7 @@ def show_students
   puts "Which letter would you like to print?"
   @letter = gets.chop
   select_students
-  if @students_select != 0
+  if @students_select.length != 0
     print_header
     print_list
     print_footer
@@ -105,16 +105,8 @@ def print_menu
   puts "9. Exit"
 end
 
-# user input loop for menu options
-def interactive_menu
-  @students = []
-  loop do
-    # 1. Print the menu and ask the user what to do
-    print_menu
-    # 2. read the input and save it to a variable
-    selection = gets.chomp
-    # 3. do what the user has asked
-    case selection
+def process(selection)
+  case selection
     when "1"
       # input the students
       input_students
@@ -125,7 +117,15 @@ def interactive_menu
       exit # this will cause the program to terminate
     else
       puts "I don't know what you mean, please try again"
-    end
+  end
+end 
+
+# user input loop for menu options
+def interactive_menu
+  @students = []
+  loop do
+    print_menu
+    process(gets.chomp)
   end
 end
 
