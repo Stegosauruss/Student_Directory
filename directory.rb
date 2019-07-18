@@ -10,7 +10,7 @@ def get_cohort
   months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
   while true
     puts "What is their cohort?"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     if cohort == ""
       cohort = :november
       break
@@ -28,20 +28,20 @@ end
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  name = gets.chop
+  name = STDIN.gets.chomp
   while !name.empty? do
     cohort = get_cohort
     puts "and their hobbies?"
-    hobby = gets.chop.to_sym
+    hobby = STDIN.gets.chomp.to_sym
     puts "and their country of birth?"
-    country = gets.chop.to_sym
+    country = STDIN.gets.chomp.to_sym
     @students << {name: name, cohort: cohort, hobbies: hobby, birth_country: country}
     if @students.length == 1
       puts "Now we have 1 student"
     else
       puts "Now we have #{@students.count} students"
     end
-    name = gets.chop
+    name = STDIN.gets.chomp
   end
 end
 
@@ -68,9 +68,9 @@ def print_students_list
   count = 0
   while count < @students_select.length  do
     puts "#{count+1}. #{@students_select[count][:name]}".center(30, "-")
-    puts "cohort: #{@students_select[count][:cohort]}".center(30, "-")
-    puts "country of birth: #{@students_select[count][:birth_country]}".center(30, "-")   
+    puts "cohort: #{@students_select[count][:cohort]}".center(30, "-")   
     puts "hobbies: #{@students_select[count][:hobbies]}".center(30, "-")
+    puts "country of birth: #{@students_select[count][:birth_country]}".center(30, "-")
     puts "-".center(30, "-")
     count += 1
   end
@@ -84,7 +84,7 @@ end
 # Combined methods for full print
 def show_students
   puts "Which letter would you like to print?"
-  @letter = gets.chop
+  @letter = STDIN.gets.chomp
   select_students
   if @students_select.length != 0
     print_header
@@ -94,6 +94,7 @@ def show_students
     puts "There are 0 students beginning with that letter"
   end
 end
+
 
 # Methods for saving and loading from students.csv
 
@@ -109,13 +110,26 @@ def save_students
 end
 
 # Method to load students from file
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort, birth_country, hobbies = line.chomp.split(",")
+    name, cohort, hobbies, birth_country = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies.to_sym, birth_country: birth_country.to_sym}
   end
   file.close
+end
+
+# Method to try to load from a file
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
 end
 
 # Methods for menu options
@@ -150,13 +164,13 @@ end
 
 # user input loop for menu options
 def interactive_menu
-  @students = []
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
 
 # Calling interactive menu
+try_load_students
 interactive_menu
